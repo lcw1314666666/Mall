@@ -1,10 +1,12 @@
 <template>
     <div class="home">
         <NavBar class="navbar">
-            <div slot="center">购物车</div>
+            <div slot="center">购物街</div>
         </NavBar>
         <Swiper :banner='banner'></Swiper>
         <RecommendView :recommend='recommend'></RecommendView>
+        <FeatureView></FeatureView>
+        <div class="box"></div>
         home
     </div>
 </template>
@@ -13,6 +15,7 @@
 import NavBar from '@/components/common/navbar/navbar.vue'
 import Swiper from './components/swiper.vue'
 import RecommendView from './components/recommendView.vue'
+import FeatureView from './components/feature.vue'
 
 
 
@@ -29,7 +32,8 @@ export default {
     components: {
         NavBar,
         Swiper,
-        RecommendView
+        RecommendView,
+        FeatureView
     },
     created () {
         getHomeMultidata().then((res) => {
@@ -44,13 +48,24 @@ export default {
 </script>
 
 <style scoped>
+.home{
+    padding-top: 44px;
+}
     .navbar{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
         background: var(--color-tint);
     }
     .navbar div{
         height: 44px;
         line-height: 44px;
         color: #fff;
+    }
+    .box{
+        height: 1000px;
     }
 </style>
 
