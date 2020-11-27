@@ -4,6 +4,7 @@
             <div slot="center">购物车</div>
         </NavBar>
         <Swiper :banner='banner'></Swiper>
+        <RecommendView :recommend='recommend'></RecommendView>
         home
     </div>
 </template>
@@ -11,6 +12,7 @@
 <script>
 import NavBar from '@/components/common/navbar/navbar.vue'
 import Swiper from './components/swiper.vue'
+import RecommendView from './components/recommendView.vue'
 
 
 
@@ -26,14 +28,16 @@ export default {
     },
     components: {
         NavBar,
-        Swiper
+        Swiper,
+        RecommendView
     },
     created () {
         getHomeMultidata().then((res) => {
             const data = res.data
             this.banner = data.banner.list
-            console.log(this.banner)
+            
             this.recommend = data.recommend.list
+            console.log(this.recommend)
         })
     }
 }
