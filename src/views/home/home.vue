@@ -3,28 +3,37 @@
         <NavBar class="navbar">
             <div slot="center">购物车</div>
         </NavBar>
+        <Swiper :banner='banner'></Swiper>
         home
     </div>
 </template>
 
 <script>
 import NavBar from '@/components/common/navbar/navbar.vue'
+import Swiper from './components/swiper.vue'
+
+
+
 import { getHomeMultidata } from '@/network/home.js' 
 
 export default {
     name: 'Home',
     data () {
         return {
-
+            banner: [],
+            recommend: []
         }
     },
     components: {
-        NavBar
+        NavBar,
+        Swiper
     },
     created () {
         getHomeMultidata().then((res) => {
             const data = res.data
-            console.log(data)
+            this.banner = data.banner.list
+            console.log(this.banner)
+            this.recommend = data.recommend.list
         })
     }
 }
