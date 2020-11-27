@@ -5,7 +5,7 @@ module.exports = {
                 'assets': '@/assets',
                 'common': '@/common',
                 'components': '@/components',
-                'network': '@/network',
+                'network': './src/network',
                 'views0': '@/views' 
             }
         }

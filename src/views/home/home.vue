@@ -9,10 +9,23 @@
 
 <script>
 import NavBar from '@/components/common/navbar/navbar.vue'
+import { getHomeMultidata } from '@/network/home.js' 
+
 export default {
     name: 'Home',
+    data () {
+        return {
+
+        }
+    },
     components: {
         NavBar
+    },
+    created () {
+        getHomeMultidata().then((res) => {
+            const data = res.data
+            console.log(data)
+        })
     }
 }
 </script>
