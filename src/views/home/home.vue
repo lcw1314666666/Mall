@@ -6,6 +6,7 @@
         <Swiper :banner='banner'></Swiper>
         <RecommendView :recommend='recommend'></RecommendView>
         <FeatureView></FeatureView>
+        <TabControl :title="['流行', '新款', '精选']"></TabControl>
         <div class="box"></div>
         home
     </div>
@@ -13,6 +14,10 @@
 
 <script>
 import NavBar from '@/components/common/navbar/navbar.vue'
+import TabControl from '@/components/content/tabControl/tabControl.vue'
+
+
+
 import Swiper from './components/swiper.vue'
 import RecommendView from './components/recommendView.vue'
 import FeatureView from './components/feature.vue'
@@ -33,7 +38,8 @@ export default {
         NavBar,
         Swiper,
         RecommendView,
-        FeatureView
+        FeatureView,
+        TabControl
     },
     created () {
         getHomeMultidata().then((res) => {
