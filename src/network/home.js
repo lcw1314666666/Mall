@@ -8,7 +8,7 @@ export function getHomeMultidata () {
 
 export function getHomeData (type, page) {
     return request({
-        url: 'recommend',
+        url: 'api/w6/home/data',
         params: {
             type,
             page

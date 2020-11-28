@@ -6,7 +6,7 @@
         <Swiper :banner='banner'></Swiper>
         <RecommendView :recommend='recommend'></RecommendView>
         <FeatureView></FeatureView>
-        <TabControl :title="['流行', '新款', '精选']"></TabControl>
+        <TabControl class="tab-control" :title="['流行', '新款', '精选']"></TabControl>
         <div class="box"></div>
         home
     </div>
@@ -24,14 +24,19 @@ import FeatureView from './components/feature.vue'
 
 
 
-import { getHomeMultidata } from '@/network/home.js' 
+import { getHomeMultidata, getHomeData } from '@/network/home.js' 
 
 export default {
     name: 'Home',
     data () {
         return {
             banner: [],
-            recommend: []
+            recommend: [],
+            goods: {
+                pop: {page: 0, list: []},
+                new: {page: 0, list: []},
+                sell: {page: 0, list: []}
+            }
         }
     },
     components: {
@@ -41,14 +46,32 @@ export default {
         FeatureView,
         TabControl
     },
+    methods: {
+        getHomeMultidata () {
+            getHomeMultidata().then((res) => {
+                const data = res.data
+                this.banner = data.banner.list
+                this.recommend = data.recommend.list
+            })
+        },
+        getHomeData (type) {
+            //根据type拿到要请求的页码
+            const page = this.goods[type].page + 1
+            getHomeData(type, page).then((res) => {
+                const list = res.data.list
+                this.goods[type].list.push(...list)
+                this.goods[type].page ++
+            })
+        }
+
+    },
     created () {
-        getHomeMultidata().then((res) => {
-            const data = res.data
-            this.banner = data.banner.list
-            
-            this.recommend = data.recommend.list
-            console.log(this.recommend)
-        })
+        this.getHomeMultidata()
+        
+        //请求商品列表
+        this.getHomeData('new')
+        this.getHomeData('pop')
+        this.getHomeData('sell')
     }
 }
 </script>
@@ -72,6 +95,11 @@ export default {
     }
     .box{
         height: 1000px;
+    }
+
+    .tab-contro{
+        position: sticky;
+        top: 100px;
     }
 </style>
 
