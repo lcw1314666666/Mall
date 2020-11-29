@@ -6,7 +6,11 @@
         <Swiper :banner='banner'></Swiper>
         <RecommendView :recommend='recommend'></RecommendView>
         <FeatureView></FeatureView>
-        <TabControl class="tab-control" :title="['流行', '新款', '精选']"></TabControl>
+        <TabControl 
+            class="tab-control" 
+            :title="['流行', '新款', '精选']"
+            @handleTabControlClick="tabControlClick"
+        ></TabControl>
         <GoodsList :goods="goods[type].list"></GoodsList>
         <div class="box"></div>
         home
@@ -66,6 +70,16 @@ export default {
                 this.goods[type].list.push(...list)
                 this.goods[type].page ++
             })
+        },
+        tabControlClick (index) {
+            const goodsType = []
+            console.log(index)
+            for (var key in this.goods) {
+                // if (this.goods.hasOwnProperty(key)) {
+                    goodsType.push(key)
+                // }
+            }
+            this.type = goodsType[index]
         }
 
     },
