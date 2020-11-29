@@ -7,6 +7,7 @@
         <RecommendView :recommend='recommend'></RecommendView>
         <FeatureView></FeatureView>
         <TabControl class="tab-control" :title="['流行', '新款', '精选']"></TabControl>
+        <GoodsList :goods="goods[type].list"></GoodsList>
         <div class="box"></div>
         home
     </div>
@@ -15,6 +16,7 @@
 <script>
 import NavBar from '@/components/common/navbar/navbar.vue'
 import TabControl from '@/components/content/tabControl/tabControl.vue'
+import GoodsList from '@/components/content/goods/goodsList.vue'
 
 
 
@@ -36,7 +38,8 @@ export default {
                 pop: {page: 0, list: []},
                 new: {page: 0, list: []},
                 sell: {page: 0, list: []}
-            }
+            },
+            type: 'pop'
         }
     },
     components: {
@@ -44,7 +47,8 @@ export default {
         Swiper,
         RecommendView,
         FeatureView,
-        TabControl
+        TabControl,
+        GoodsList
     },
     methods: {
         getHomeMultidata () {
