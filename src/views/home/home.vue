@@ -4,7 +4,7 @@
             <div slot="center">购物街</div>
         </NavBar>
 
-        <BetterScroll class="content">
+        <BetterScroll class="content" ref="scroll" @scroll="scroll">
             <Swiper :banner='banner'></Swiper>
             <RecommendView :recommend='recommend'></RecommendView>
             <FeatureView></FeatureView>
@@ -15,6 +15,7 @@
             ></TabControl>
             <GoodsList :goods="goods[type].list"></GoodsList>
         </BetterScroll>
+        <BackTop @click.native="backTopClick" v-show="showBackTop"></BackTop>
     </div>
 </template>
 
@@ -23,6 +24,7 @@ import NavBar from '@/components/common/navbar/navbar.vue'
 import TabControl from '@/components/content/tabControl/tabControl.vue'
 import GoodsList from '@/components/content/goods/goodsList.vue'
 import BetterScroll from '@/components/common/scroll/scroll.vue'
+import BackTop from '@/components/content/backTop/backTop.vue'
 
 
 
@@ -46,7 +48,8 @@ export default {
                 new: {page: 0, list: []},
                 sell: {page: 0, list: []}
             },
-            type: 'pop'
+            type: 'pop',
+            showBackTop: false
         }
     },
     components: {
@@ -56,7 +59,8 @@ export default {
         FeatureView,
         TabControl,
         GoodsList,
-        BetterScroll
+        BetterScroll,
+        BackTop
     },
     methods: {
         getHomeMultidata () {
@@ -75,6 +79,8 @@ export default {
                 this.goods[type].page ++
             })
         },
+
+        //事件
         tabControlClick (index) {
             const goodsType = []
             for (var key in this.goods) {
@@ -83,6 +89,18 @@ export default {
                 // }
             }
             this.type = goodsType[index]
+        },
+        backTopClick () {
+            this.$refs.scroll.scrollTo()
+        },
+        scroll (position) {
+            const y = position.y
+            console.log(y)
+            if (y < -1000) {
+                this.showBackTop = true
+            } else if (y > -1000) {
+                this.showBackTop = false
+            }
         }
 
     },

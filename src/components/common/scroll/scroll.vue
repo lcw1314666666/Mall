@@ -12,18 +12,25 @@ export default {
     name: "Scroll",
     data () {
         return {
-            scroll: null
+            scroll: null,
+            scrollTo: this.backTopCkick
+        }
+    },
+    methods: {
+        backTopCkick () {
+            this.scroll.scrollTo(0, 0, 300)
         }
     },
     mounted () {
-        console.log(this.$refs.content)
         this.scroll = new BetterScroll(this.$refs.content, {
             // movable: true,
             // zoom: true
-            scrollY: true,
-            click: true
+            click: true,
+            probeType: 3
         })
-        console.log()
+        this.scroll.on('scroll', (position) => {
+            this.$emit('scroll', position)
+        })
     }
 }
 </script>
