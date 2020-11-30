@@ -39,7 +39,7 @@ export default {
     .info{
         font-size: 12px;
         position: absolute;
-        bottom: 15px;
+        bottom: -10px;
         right: 0;
         left: 0;
         text-align: center;
@@ -63,8 +63,8 @@ export default {
     .info .collect::before{
         content: '';
         position: absolute;
-        left: 25px;
-        top: -1px;
+        left: -13px;
+        top: px;
         width: 14px;
         height: 14px;
         background: url('../../../assets/img/common/collect.svg') 0 0/14px 14px;

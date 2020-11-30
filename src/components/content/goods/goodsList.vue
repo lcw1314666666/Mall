@@ -35,9 +35,10 @@ export default {
         justify-content: content;
         justify-content: space-around;
         width: 100%;
+        height: 100%;
         /* flex-direction: row; */
     }
     .goods .goods-item{
-        width: 11rem;
+        width: 45%;
     }
 </style>

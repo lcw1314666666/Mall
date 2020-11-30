@@ -29,6 +29,7 @@ export default {
     },
     methods: {
         hanldeItemClick (index) {
+            console.log(123)
             this.currentIndex = index
             this.$emit('handleTabControlClick', index)
         }
@@ -40,6 +41,7 @@ export default {
     .tabControl{
         display: flex;
         text-align: center;
+        height: 100%;
     }
     .tabControl .tabControl-item{
         flex: 1;

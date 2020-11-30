@@ -60,7 +60,7 @@ export default {
        width: 100%;
        height: 180px;
    }
-   .swiper .swiper-slide{
+   .swiper swiper-slide{
        width: 100%;
        height: 100%;
    }

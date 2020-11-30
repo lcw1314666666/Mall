@@ -3,17 +3,18 @@
         <NavBar class="navbar">
             <div slot="center">购物街</div>
         </NavBar>
-        <Swiper :banner='banner'></Swiper>
-        <RecommendView :recommend='recommend'></RecommendView>
-        <FeatureView></FeatureView>
-        <TabControl 
-            class="tab-control" 
-            :title="['流行', '新款', '精选']"
-            @handleTabControlClick="tabControlClick"
-        ></TabControl>
-        <GoodsList :goods="goods[type].list"></GoodsList>
-        <div class="box"></div>
-        home
+
+        <BetterScroll class="content">
+            <Swiper :banner='banner'></Swiper>
+            <RecommendView :recommend='recommend'></RecommendView>
+            <FeatureView></FeatureView>
+            <TabControl 
+                class="tab-control" 
+                :title="['流行', '新款', '精选']"
+                @handleTabControlClick="tabControlClick"
+            ></TabControl>
+            <GoodsList :goods="goods[type].list"></GoodsList>
+        </BetterScroll>
     </div>
 </template>
 
@@ -21,12 +22,14 @@
 import NavBar from '@/components/common/navbar/navbar.vue'
 import TabControl from '@/components/content/tabControl/tabControl.vue'
 import GoodsList from '@/components/content/goods/goodsList.vue'
+import BetterScroll from '@/components/common/scroll/scroll.vue'
 
 
 
 import Swiper from './components/swiper.vue'
 import RecommendView from './components/recommendView.vue'
 import FeatureView from './components/feature.vue'
+
 
 
 
@@ -52,7 +55,8 @@ export default {
         RecommendView,
         FeatureView,
         TabControl,
-        GoodsList
+        GoodsList,
+        BetterScroll
     },
     methods: {
         getHomeMultidata () {
@@ -73,7 +77,6 @@ export default {
         },
         tabControlClick (index) {
             const goodsType = []
-            console.log(index)
             for (var key in this.goods) {
                 // if (this.goods.hasOwnProperty(key)) {
                     goodsType.push(key)
@@ -90,13 +93,18 @@ export default {
         this.getHomeData('new')
         this.getHomeData('pop')
         this.getHomeData('sell')
+    },
+    mounted () {
     }
 }
 </script>
 
 <style scoped>
 .home{
-    padding-top: 44px;
+    position: relative;
+    /* padding-top: 44px; */
+    height: 100vh;
+    /* overflow: hidden; */
 }
     .navbar{
         position: fixed;
@@ -119,5 +127,15 @@ export default {
         position: sticky;
         top: 100px;
     }
+    .content{
+        overflow: hidden;
+        position: absolute;
+        top: 44px;
+        bottom: 49px;
+        right: 0;
+        left: 0;
+        /* height: calc(100% - 70px); */
+    }
+    
 </style>
 

@@ -73,7 +73,11 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 } */
-img{
+html, body, #app{
+  /* height: 100%; */
+  height: 100vh;
+}
+/* img{
   width: 24px;
   height: 24px;
   margin-top: 6px;
@@ -81,5 +85,5 @@ img{
 div{
   height: 24px;
   line-height: 24px;
-}
+} */
 </style>
