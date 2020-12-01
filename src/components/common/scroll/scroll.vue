@@ -16,9 +16,22 @@ export default {
             scrollTo: this.backTopCkick
         }
     },
+    props: {
+        probeType: {
+            type: Number,
+            default: 0
+        },
+        pullUpLoad: {
+            type: Boolean,
+            default: false
+        }
+    },
     methods: {
         backTopCkick () {
             this.scroll.scrollTo(0, 0, 300)
+        },
+        finishPullUp () {
+            this.scroll.finishPullUp()
         }
     },
     mounted () {
@@ -26,10 +39,14 @@ export default {
             // movable: true,
             // zoom: true
             click: true,
-            probeType: 3
+            probeType: this.probeType,
+            pullUpLoad: this.pullUpLoad
         })
         this.scroll.on('scroll', (position) => {
             this.$emit('scroll', position)
+        })
+        this.scroll.on('pullingUp', () => {
+            this.$emit('pullUpLoad')
         })
     }
 }

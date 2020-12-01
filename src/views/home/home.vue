@@ -4,7 +4,13 @@
             <div slot="center">购物街</div>
         </NavBar>
 
-        <BetterScroll class="content" ref="scroll" @scroll="scroll">
+        <BetterScroll 
+            class="content" 
+            ref="scroll" 
+            @scroll="scroll"
+            :probeType="3"
+            :pullUpLoad="true"
+            @pullUpLoad="handlePullingUp">
             <Swiper :banner='banner'></Swiper>
             <RecommendView :recommend='recommend'></RecommendView>
             <FeatureView></FeatureView>
@@ -95,12 +101,16 @@ export default {
         },
         scroll (position) {
             const y = position.y
-            console.log(y)
+            // console.log(y)
             if (y < -1000) {
                 this.showBackTop = true
             } else if (y > -1000) {
                 this.showBackTop = false
             }
+        },
+        handlePullingUp () {
+            this.getHomeData(this.type)
+            this.$refs.scroll.finishPullUp()
         }
 
     },
