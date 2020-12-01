@@ -10,7 +10,8 @@
             @scroll="scroll"
             :probeType="3"
             :pullUpLoad="true"
-            @pullUpLoad="handlePullingUp">
+            @pullUpLoad="handlePullingUp"
+        >
             <Swiper :banner='banner'></Swiper>
             <RecommendView :recommend='recommend'></RecommendView>
             <FeatureView></FeatureView>
@@ -111,6 +112,17 @@ export default {
         handlePullingUp () {
             this.getHomeData(this.type)
             this.$refs.scroll.finishPullUp()
+        },
+
+        //函数防抖
+        debounce (func, delay) {
+            let timer = null
+            return function (...args) {
+                if (timer) clearTimeout(timer)
+                timer = setTimeout(() => {
+                    func.apply(this, args)
+                }, delay)
+            }
         }
 
     },
@@ -123,6 +135,11 @@ export default {
         this.getHomeData('sell')
     },
     mounted () {
+        const refresh = this.debounce(this.$refs.scroll.refresh, 100)
+        
+        this.$bus.$on('imageLoad', () => {
+            refresh()
+        })
     }
 }
 </script>

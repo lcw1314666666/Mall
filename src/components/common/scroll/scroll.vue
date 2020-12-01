@@ -28,10 +28,14 @@ export default {
     },
     methods: {
         backTopCkick () {
-            this.scroll.scrollTo(0, 0, 300)
+            this.scroll && this.scroll.scrollTo(0, 0, 300)
         },
         finishPullUp () {
-            this.scroll.finishPullUp()
+            this.scroll && this.scroll.finishPullUp()
+        },
+        refresh () {
+            console.log(123)
+            this.scroll && this.scroll.refresh()
         }
     },
     mounted () {
