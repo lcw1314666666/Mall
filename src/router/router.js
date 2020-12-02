@@ -8,9 +8,14 @@ const Home = () => import('../views/home/home.vue')
 const Cart = () => import('../views/cart/cart.vue')
 const Category = () => import('../views/category/category.vue')
 const Profile = () => import('../views/profile/profile.vue')
+const Detail = () => import('@/views/detail/detail.vue')
 
 
 const routes = [
+  {
+    path: '/',
+    component: Home
+  },
   {
     path: '/home',
     name: 'Home',
@@ -40,6 +45,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: Profile
   },
+  {
+    path: '/detail:id',
+    name: 'Detail',
+    component: Detail
+  }
 
 ]
 

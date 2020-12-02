@@ -195,7 +195,6 @@ export default {
         // 离开home页面触发该函数
         let scrollY = this.$refs.scroll.getScrollY()
         this.saveY = scrollY
-        console.log(this.saveY)
     }
 }
 </script>
