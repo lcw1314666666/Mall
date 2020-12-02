@@ -3,6 +3,13 @@
         <NavBar class="navbar">
             <div slot="center">购物街</div>
         </NavBar>
+        <TabControl 
+            class="tab-control tab-control1" 
+            :title="['流行', '新款', '精选']"
+            @handleTabControlClick="tabControlClick"
+            ref="tabControl1"
+            v-show="tabControlIsTop"
+        ></TabControl>
 
         <BetterScroll 
             class="content" 
@@ -12,13 +19,14 @@
             :pullUpLoad="true"
             @pullUpLoad="handlePullingUp"
         >
-            <Swiper :banner='banner'></Swiper>
+            <Swiper :banner='banner' @swiperImgLoad="swiperImageLoad"></Swiper>
             <RecommendView :recommend='recommend'></RecommendView>
             <FeatureView></FeatureView>
             <TabControl 
                 class="tab-control" 
                 :title="['流行', '新款', '精选']"
                 @handleTabControlClick="tabControlClick"
+                ref="tabControl"
             ></TabControl>
             <GoodsList :goods="goods[type].list"></GoodsList>
         </BetterScroll>
@@ -43,6 +51,7 @@ import FeatureView from './components/feature.vue'
 
 
 import { getHomeMultidata, getHomeData } from '@/network/home.js' 
+import {debounce} from '@/common/utils.js'
 
 export default {
     name: 'Home',
@@ -56,7 +65,9 @@ export default {
                 sell: {page: 0, list: []}
             },
             type: 'pop',
-            showBackTop: false
+            showBackTop: false,
+            tabControlTop: 0,
+            tabControlIsTop: false
         }
     },
     components: {
@@ -84,6 +95,8 @@ export default {
                 const list = res.data.list
                 this.goods[type].list.push(...list)
                 this.goods[type].page ++
+
+                this.$refs.scroll.finishPullUp()
             })
         },
 
@@ -95,12 +108,18 @@ export default {
                     goodsType.push(key)
                 // }
             }
+            // this.$refs.tabControl1.currentIndex = this.type
+            // this.$refs.tabControl.currentIndex = this.type
+            // console.log(this.$refs.tabControl1.currentIndex, this.$refs.tabControl.currentIndex)
             this.type = goodsType[index]
+            this.$refs.tabControl1.currentIndex = index 
+            this.$refs.tabControl.currentIndex = index
         },
         backTopClick () {
             this.$refs.scroll.scrollTo()
         },
         scroll (position) {
+            //判断backTop组件是否显示
             const y = position.y
             // console.log(y)
             if (y < -1000) {
@@ -108,22 +127,40 @@ export default {
             } else if (y > -1000) {
                 this.showBackTop = false
             }
+            //判断tabControl是否吸顶
+            
+            if (-y > this.tabControlTop) {
+                this.tabControlIsTop = true
+            }else if(-y < this.tabControlTop){
+                this.tabControlIsTop = false
+            }
         },
         handlePullingUp () {
-            this.getHomeData(this.type)
-            this.$refs.scroll.finishPullUp()
+            // const getHomeData = this.debounce(this.getHomeData(this.type), 100)
+            // getHomeData()
+            let timer = null
+            if (timer) clearTimeout(timer)
+            timer = setTimeout(() => {
+                this.getHomeData(this.type)
+            }, 200)
+            // this.getHomeData(this.type)
         },
+        swiperImageLoad () {
+            //轮播图图片加载完成,可以获取tabControl到顶部的高度
+            let tabControlTop = this.$refs.tabControl.$el.offsetTop
+            this.tabControlTop = tabControlTop
+        }
 
         //函数防抖
-        debounce (func, delay) {
-            let timer = null
-            return function (...args) {
-                if (timer) clearTimeout(timer)
-                timer = setTimeout(() => {
-                    func.apply(this, args)
-                }, delay)
-            }
-        }
+        // debounce (func, delay) {
+        //     let timer = null
+        //     return function (...args) {
+        //         if (timer) clearTimeout(timer)
+        //         timer = setTimeout(() => {
+        //             func.apply(this, args)
+        //         }, delay)
+        //     }
+        // }
 
     },
     created () {
@@ -135,11 +172,12 @@ export default {
         this.getHomeData('sell')
     },
     mounted () {
-        const refresh = this.debounce(this.$refs.scroll.refresh, 100)
-        
+        const refresh = debounce(this.$refs.scroll.refresh, 100)
         this.$bus.$on('imageLoad', () => {
             refresh()
         })
+
+        
     }
 }
 </script>
@@ -152,10 +190,6 @@ export default {
     /* overflow: hidden; */
 }
     .navbar{
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
         z-index: 999;
         background: var(--color-tint);
     }
@@ -167,11 +201,15 @@ export default {
     .box{
         height: 1000px;
     }
-
-    .tab-contro{
-        position: sticky;
-        top: 100px;
+    .tab-control1{
+        position: relative;
+        top: -1px;
+        left: 0;
+        right: 0;
+        z-index: 2;
     }
+
+
     .content{
         overflow: hidden;
         position: absolute;

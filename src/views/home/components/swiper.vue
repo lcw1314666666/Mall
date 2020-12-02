@@ -2,7 +2,7 @@
 
     <swiper class="swiper" ref="mySwiper" :options="swiperOptions">
             <swiper-slide v-for="item in banner" :key="item.ace">
-                <img :src="item.image" alt="">
+                <img :src="item.image" alt="" @load="swiperImgLoad">
             </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
@@ -24,7 +24,8 @@ export default {
                 el: '.swiper-pagination'
             }
           // Some Swiper option/callback...
-        }
+        },
+        imgLoad: false
       }
     },
     props: {
@@ -33,6 +34,14 @@ export default {
     components: {
         Swiper,
         SwiperSlide
+    },
+    methods: {
+        swiperImgLoad () {
+            if (!this.imgLoad) {
+                this.$emit('swiperImgLoad')
+                this.imgLoad = true
+            }
+        }
     },
     computed: {
       swiper() {

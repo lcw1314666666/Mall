@@ -38,13 +38,12 @@ export default {
     .goodsList img{
         width: 100%;
         height: 90%;
-        margin-top: 15px;
         border-radius: 5px;
     }
     .info{
         font-size: 12px;
         position: absolute;
-        bottom: -10px;
+        bottom: 0;
         right: 0;
         left: 0;
         text-align: center;

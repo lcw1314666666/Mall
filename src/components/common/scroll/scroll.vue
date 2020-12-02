@@ -34,7 +34,7 @@ export default {
             this.scroll && this.scroll.finishPullUp()
         },
         refresh () {
-            console.log(123)
+            // console.log(123)
             this.scroll && this.scroll.refresh()
         }
     },
@@ -46,12 +46,16 @@ export default {
             probeType: this.probeType,
             pullUpLoad: this.pullUpLoad
         })
+        if (this.probeType && (this.probeType === 3 || 2))
         this.scroll.on('scroll', (position) => {
             this.$emit('scroll', position)
         })
-        this.scroll.on('pullingUp', () => {
-            this.$emit('pullUpLoad')
-        })
+        if (this.pullUpLoad) {
+            this.scroll.on('pullingUp', () => {
+                this.$emit('pullUpLoad')
+            })
+        }
+        
     }
 }
 </script>
