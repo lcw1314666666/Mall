@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <TarBar>
         <TarBarItem path='/home' activeColor='red'>
           <template v-slot:item-icon>

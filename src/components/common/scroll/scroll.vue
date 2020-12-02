@@ -13,7 +13,7 @@ export default {
     data () {
         return {
             scroll: null,
-            scrollTo: this.backTopCkick
+            backTop: this.backTopCkick
         }
     },
     props: {
@@ -36,6 +36,9 @@ export default {
         refresh () {
             // console.log(123)
             this.scroll && this.scroll.refresh()
+        },
+        getScrollY () {
+            return this.scroll && this.scroll.y
         }
     },
     mounted () {

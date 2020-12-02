@@ -67,7 +67,8 @@ export default {
             type: 'pop',
             showBackTop: false,
             tabControlTop: 0,
-            tabControlIsTop: false
+            tabControlIsTop: false,
+            saveY: 0
         }
     },
     components: {
@@ -102,21 +103,26 @@ export default {
 
         //事件
         tabControlClick (index) {
+            //1.根据点击的按钮索引请求数据
             const goodsType = []
             for (var key in this.goods) {
                 // if (this.goods.hasOwnProperty(key)) {
                     goodsType.push(key)
                 // }
             }
-            // this.$refs.tabControl1.currentIndex = this.type
-            // this.$refs.tabControl.currentIndex = this.type
-            // console.log(this.$refs.tabControl1.currentIndex, this.$refs.tabControl.currentIndex)
             this.type = goodsType[index]
+            //2.同步两个tabControl的索引
             this.$refs.tabControl1.currentIndex = index 
             this.$refs.tabControl.currentIndex = index
+            //判断scroll的位置，如果滚动距离超过tabControl到顶部的据里就将scroll滚动到tabControl到顶部的距离
+            let scroll = this.$refs.scroll.scroll
+            // console.log(scroll.y, -this.tabControlTop)
+            if (scroll.y < -this.tabControlTop) {
+                scroll.scrollTo(0, -this.tabControlTop, 500)
+            }
         },
         backTopClick () {
-            this.$refs.scroll.scrollTo()
+            this.$refs.scroll.backTop()
         },
         scroll (position) {
             //判断backTop组件是否显示
@@ -178,6 +184,18 @@ export default {
         })
 
         
+    },
+    activated () {
+        // 进入home页面触发该函数
+        const scroll = this.$refs.scroll.scroll
+        scroll.scrollTo(0, this.saveY, 0)
+        scroll.refresh()
+    },
+    deactivated () {
+        // 离开home页面触发该函数
+        let scrollY = this.$refs.scroll.getScrollY()
+        this.saveY = scrollY
+        console.log(this.saveY)
     }
 }
 </script>
