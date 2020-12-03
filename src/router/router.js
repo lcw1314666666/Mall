@@ -46,7 +46,7 @@ const routes = [
     component: Profile
   },
   {
-    path: '/detail:id',
+    path: '/detail',
     name: 'Detail',
     component: Detail
   }

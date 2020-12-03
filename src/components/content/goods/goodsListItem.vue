@@ -26,7 +26,13 @@ export default {
         },
         itemClick (goods) {
             // console.log(goods, this.$router)
-            this.$router.push('/detail' + goods.iid)
+            
+            this.$router.push({
+                path: '/detail',
+                query: {
+                    iid: goods.iid
+                }
+            })
         }
     }
 }
