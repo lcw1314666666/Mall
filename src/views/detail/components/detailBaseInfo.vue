@@ -48,16 +48,16 @@ export default {
     }
     .detailBaseInfo .info-title{
         font-size: 1.29rem;
-        height: 2.8rem;
+        /* height: 2.8rem; */
         /* overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         white-space: normal; */
-        -webkit-line-clamp: 2;
+        /* -webkit-line-clamp: 2;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        overflow: hidden;
+        overflow: hidden; */
     }
     .detailBaseInfo .info-price{
         padding: 10px 5px;
