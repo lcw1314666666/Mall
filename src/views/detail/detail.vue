@@ -2,26 +2,30 @@
     <div class="detail">
         <DetailNavBar></DetailNavBar>
         <DetailSwiper :list="swiperList"></DetailSwiper>
+        <DetailBaseIfon :goodsInfo="this.goods"></DetailBaseIfon>
     </div>
 </template>
 
 <script>
 import DetailNavBar from './components/detailNavBar'
 import DetailSwiper from './components/detailSwiper'
+import DetailBaseIfon from './components/detailBaseInfo'
 
 
-import { getDetailData } from '@/network/detail.js'
+import { getDetailData, Goods } from '@/network/detail.js'
 export default {
     name: 'Detail',
     data () {
         return {
             swiperList: null,
-            iid: ''
+            iid: '',
+            goods: {}
         }
     },
     components: {
         DetailNavBar,
-        DetailSwiper
+        DetailSwiper,
+        DetailBaseIfon
     },
     created () {
         let iid = this.$route.query.iid
@@ -29,6 +33,9 @@ export default {
         getDetailData(this.iid).then((res) => {
             let data = res.result
             this.swiperList = data.itemInfo.topImages
+            console.log(data)
+            this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo.services)
+            console.log(this.goods)
         })
     }
 }

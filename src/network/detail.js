@@ -8,3 +8,15 @@ export function getDetailData (iid) {
         url
     })
 }
+
+export class Goods {
+    constructor (itemInfo, columns, services) {
+        this.desc = itemInfo.desc
+        this.price = itemInfo.price
+        this.oldPrice = itemInfo.oldPrice
+        this.discount = itemInfo.discountDesc
+        this.discountcolor = itemInfo.discountBgColor
+        this.columns = columns
+        this.services = services
+    }
+}
