@@ -48,6 +48,7 @@ export default {
     }
     .detailBaseInfo .info-title{
         font-size: 1.29rem;
+        color: #333;
         /* height: 2.8rem; */
         /* overflow: hidden;
         white-space: nowrap;
@@ -96,6 +97,7 @@ export default {
         margin: 10px 0;
         display: flex;
         justify-content: space-between;
+        margin-bottom: 1.4rem;
     }
     .detailBaseInfo .info-services img{
         width: 13px;

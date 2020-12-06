@@ -2,40 +2,47 @@
     <div class="detail">
         <DetailNavBar></DetailNavBar>
         <DetailSwiper :list="swiperList"></DetailSwiper>
-        <DetailBaseIfon :goodsInfo="this.goods"></DetailBaseIfon>
+        <DetailBaseInfo :goodsInfo="goods"></DetailBaseInfo>
+        <DetailShopInfo :shops="shop"></DetailShopInfo>
     </div>
 </template>
 
 <script>
 import DetailNavBar from './components/detailNavBar'
 import DetailSwiper from './components/detailSwiper'
-import DetailBaseIfon from './components/detailBaseInfo'
+import DetailBaseInfo from './components/detailBaseInfo'
+import DetailShopInfo from './components/detailShopInfo'
 
 
-import { getDetailData, Goods } from '@/network/detail.js'
+import { getDetailData, Goods, Shop } from '@/network/detail.js'
 export default {
     name: 'Detail',
     data () {
         return {
             swiperList: null,
             iid: '',
-            goods: {}
+            goods: {},
+            shop: {}
         }
     },
     components: {
         DetailNavBar,
         DetailSwiper,
-        DetailBaseIfon
+        DetailBaseInfo,
+        DetailShopInfo
     },
     created () {
         let iid = this.$route.query.iid
         this.iid = iid
         getDetailData(this.iid).then((res) => {
             let data = res.result
+            //1.获取轮播图数据
             this.swiperList = data.itemInfo.topImages
             console.log(data)
+            //2.获取商品信息
             this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo.services)
-            console.log(this.goods)
+            //3.获取商家信息
+            this.shop = new Shop(data.shopInfo)
         })
     }
 }
