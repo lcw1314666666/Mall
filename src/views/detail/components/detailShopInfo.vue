@@ -2,7 +2,7 @@
     <div class="detailShopInfo">
         
         <div class="shop-top">
-            <img :src="shops.shopLogo" alt="">
+            <img :src="shops.shopLogo" alt="" @load="shopTopImgload">
             <span class="shop-name">{{ shops.name }}</span>
         </div>
 
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="box"></div>
+        <div class="go-shop">进店逛逛</div>
         
     </div>
 </template>
@@ -42,6 +42,14 @@ export default {
                 return {}
             }
         }
+    },
+    methods: {
+        shopTopImgload () {
+            this.$emit('imgLoad')
+        }
+    },
+    mounted () {
+        
     },
     filters: {
         calcSell (sell) {
@@ -65,6 +73,7 @@ export default {
     .detailShopInfo{
         padding-top: 20px;
         border-top: 0.3rem solid #eee;
+        border-bottom: 0.4rem solid #eee;
         
     }
     .detailShopInfo .shop-top{
@@ -150,8 +159,16 @@ export default {
         background: #dd001b;
     }
 
-    .box{
-        height: 1000px;
+    .go-shop{
+        width: 6rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        text-align: center;
+        padding: 0.5rem;
+        border-radius: 0.2rem;
+        background: #eee;
+        margin: 2rem auto;
+        
     }
 
 

@@ -1,10 +1,11 @@
 <template>
     <div class="detail">
         <DetailNavBar class="detail-nav"></DetailNavBar>
-        <BetterScroll class="scroll">
+        <BetterScroll class="scroll" ref="scroll">
             <DetailSwiper :list="swiperList"></DetailSwiper>
             <DetailBaseInfo :goodsInfo="goods"></DetailBaseInfo>
-            <DetailShopInfo :shops="shop"></DetailShopInfo>
+            <DetailShopInfo :shops="shop" @imgLoad="imageLoad"></DetailShopInfo>
+            <DetailGoodsImage :detailInfo="detailImage" @imageLoad="imageLoad"></DetailGoodsImage>
         </BetterScroll>
         
     </div>
@@ -15,6 +16,7 @@ import DetailNavBar from './components/detailNavBar'
 import DetailSwiper from './components/detailSwiper'
 import DetailBaseInfo from './components/detailBaseInfo'
 import DetailShopInfo from './components/detailShopInfo'
+import DetailGoodsImage from './components/detailgoodsImage'
 
 import BetterScroll from '@/components/common/scroll/scroll'
 import { getDetailData, Goods, Shop } from '@/network/detail.js'
@@ -25,7 +27,8 @@ export default {
             swiperList: null,
             iid: '',
             goods: {},
-            shop: {}
+            shop: {},
+            detailImage: {}
         }
     },
     components: {
@@ -33,7 +36,13 @@ export default {
         DetailSwiper,
         DetailBaseInfo,
         DetailShopInfo,
-        BetterScroll
+        BetterScroll,
+        DetailGoodsImage
+    },
+    methods: {
+        imageLoad () {
+            this.$refs.scroll.refresh()
+        }
     },
     created () {
         let iid = this.$route.query.iid
@@ -47,6 +56,8 @@ export default {
             this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo.services)
             //3.获取商家信息
             this.shop = new Shop(data.shopInfo)
+            //4.获取商品图片信息
+            this.detailImage = data.detailInfo
         })
     }
 }
