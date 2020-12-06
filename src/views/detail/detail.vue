@@ -6,6 +6,7 @@
             <DetailBaseInfo :goodsInfo="goods"></DetailBaseInfo>
             <DetailShopInfo :shops="shop" @imgLoad="imageLoad"></DetailShopInfo>
             <DetailGoodsImage :detailInfo="detailImage" @imageLoad="imageLoad"></DetailGoodsImage>
+            <DetailParams :params="itemParams"></DetailParams>
         </BetterScroll>
         
     </div>
@@ -17,9 +18,10 @@ import DetailSwiper from './components/detailSwiper'
 import DetailBaseInfo from './components/detailBaseInfo'
 import DetailShopInfo from './components/detailShopInfo'
 import DetailGoodsImage from './components/detailgoodsImage'
+import DetailParams from './components/detailParams'
 
 import BetterScroll from '@/components/common/scroll/scroll'
-import { getDetailData, Goods, Shop } from '@/network/detail.js'
+import { getDetailData, Goods, Shop, Params } from '@/network/detail.js'
 export default {
     name: 'Detail',
     data () {
@@ -28,7 +30,8 @@ export default {
             iid: '',
             goods: {},
             shop: {},
-            detailImage: {}
+            detailImage: {},
+            itemParams: {}
         }
     },
     components: {
@@ -37,7 +40,8 @@ export default {
         DetailBaseInfo,
         DetailShopInfo,
         BetterScroll,
-        DetailGoodsImage
+        DetailGoodsImage,
+        DetailParams
     },
     methods: {
         imageLoad () {
@@ -58,6 +62,9 @@ export default {
             this.shop = new Shop(data.shopInfo)
             //4.获取商品图片信息
             this.detailImage = data.detailInfo
+            //5.获取参数信息
+            this.itemParams = new Params(data.itemParams)
+            console.log(this.itemParams)
         })
     }
 }

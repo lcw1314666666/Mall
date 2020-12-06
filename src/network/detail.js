@@ -30,3 +30,13 @@ export class Shop {
         this.score = shopInfo.score
     }
 }
+
+export class Params {
+    constructor (itemParams) {
+        
+        this.infoKey = itemParams.info.key
+        this.info = itemParams.info.set
+        this.ruleKey = itemParams.rule.key
+        this.rule = itemParams.rule.tables
+    }
+}
