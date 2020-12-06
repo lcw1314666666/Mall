@@ -1,9 +1,12 @@
 <template>
     <div class="detail">
-        <DetailNavBar></DetailNavBar>
-        <DetailSwiper :list="swiperList"></DetailSwiper>
-        <DetailBaseInfo :goodsInfo="goods"></DetailBaseInfo>
-        <DetailShopInfo :shops="shop"></DetailShopInfo>
+        <DetailNavBar class="detail-nav"></DetailNavBar>
+        <BetterScroll class="scroll">
+            <DetailSwiper :list="swiperList"></DetailSwiper>
+            <DetailBaseInfo :goodsInfo="goods"></DetailBaseInfo>
+            <DetailShopInfo :shops="shop"></DetailShopInfo>
+        </BetterScroll>
+        
     </div>
 </template>
 
@@ -13,7 +16,7 @@ import DetailSwiper from './components/detailSwiper'
 import DetailBaseInfo from './components/detailBaseInfo'
 import DetailShopInfo from './components/detailShopInfo'
 
-
+import BetterScroll from '@/components/common/scroll/scroll'
 import { getDetailData, Goods, Shop } from '@/network/detail.js'
 export default {
     name: 'Detail',
@@ -29,7 +32,8 @@ export default {
         DetailNavBar,
         DetailSwiper,
         DetailBaseInfo,
-        DetailShopInfo
+        DetailShopInfo,
+        BetterScroll
     },
     created () {
         let iid = this.$route.query.iid
@@ -49,6 +53,19 @@ export default {
 </script>
 
 
-<style lang="less" scoped>
-
+<style scoped>
+    .detail{
+        position: relative;
+        z-index: 9;
+        background: #fff;
+        height: 100vh;
+    }
+    .scroll{
+        overflow: hidden;
+        position: absolute;
+        top: 44px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
 </style>
