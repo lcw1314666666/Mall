@@ -16,13 +16,10 @@
                     <span class="style">{{ item.style }}</span>
                 </div>
                 <div class="images" v-if="item.images">
-                    <img v-for="(value, index) in item.images" :src="value" alt="" :key="index">
+                    <img class="commentImg" v-for="(value, index) in item.images" :src="value" alt="" :key="index">
                 </div>
             </div>
         </div>
-        
-
-        <div class="box"></div>
     </div>
 </template>
 
@@ -44,15 +41,13 @@ export default {
 
 
 <style scoped>
-.box{
-    height:1000px;
-}
     .detailComment{
-        margin-top: 0.2rem;
-        text-align: center;
+        margin: 0.2rem 0;
         font-size: 0.9rem;
         color: #333;
-        margin-bottom: 0.2rem;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        border-bottom: 0.2rem solid #eee;
     }
     .detailComment .top{
         /* overflow: hidden; */
@@ -103,8 +98,12 @@ export default {
     .commentStyle .style{
         margin-left: 0.4rem;
     }
-    .images img{
-        width: 2.5rem;
-        height: 2.5rem;
+    .images{
+        margin-top: 0.2rem;
+        margin-left: 0.2rem;
+    }
+    .images .commentImg{
+        width: 4rem;
+        height: 4rem;
     }
 </style>

@@ -36,8 +36,11 @@ export default {
 
 <style scoped>
     .detail-params{
-        padding-bottom: 2rem;
+        padding-bottom: 1rem;
         border-bottom: 0.3rem solid #eee;
+    }
+    .detail-params .rule{
+        border-bottom: 0.1rem solid #eee;
     }
     .detail-params table{
         width: 100%;
@@ -46,12 +49,12 @@ export default {
         font-size: .9rem;
     }
     .detail-params table tr{
-        height: 3rem;
-        line-height: 3rem;
-        border-bottom:1px dashed #000;
+        height: 2.4rem;
+        line-height: 2.4rem;
+        border-bottom:1px dashed #eee;
     }
     .info{
-        padding-left: 2rem;
+        padding-left: 1rem;
         text-align: center;
     }
     .info .infoValue{

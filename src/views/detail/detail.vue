@@ -8,6 +8,7 @@
             <DetailGoodsImage :detailInfo="detailImage" @imageLoad="imageLoad"></DetailGoodsImage>
             <DetailParams :params="itemParams"></DetailParams>
             <DetailComment :list="commentData"></DetailComment>
+            <DetailRecommend :goods="recommendData"></DetailRecommend>
         </BetterScroll>
         
     </div>
@@ -21,9 +22,10 @@ import DetailShopInfo from './components/detailShopInfo'
 import DetailGoodsImage from './components/detailgoodsImage'
 import DetailParams from './components/detailParams'
 import DetailComment from './components/detailComment'
+import DetailRecommend from '@/components/content/goods/goodsList'
 
 import BetterScroll from '@/components/common/scroll/scroll'
-import { getDetailData, Goods, Shop, Params } from '@/network/detail.js'
+import { getDetailData, Goods, Shop, Params, getRecommendData } from '@/network/detail.js'
 export default {
     name: 'Detail',
     data () {
@@ -34,7 +36,8 @@ export default {
             shop: {},
             detailImage: {},
             itemParams: {},
-            commentData: []
+            commentData: [],
+            recommendData: []
         }
     },
     components: {
@@ -45,7 +48,8 @@ export default {
         BetterScroll,
         DetailGoodsImage,
         DetailParams,
-        DetailComment
+        DetailComment,
+        DetailRecommend
     },
     methods: {
         imageLoad () {
@@ -70,7 +74,12 @@ export default {
             this.itemParams = new Params(data.itemParams)
             //6.获取评论信息
             this.commentData = data.rate.list
-            console.log(this.commentData)
+        })
+        getRecommendData ().then((res) => {
+            if (res || res.success === true) {
+                this.recommendData = res.data.list
+                console.log(this.recommendData)
+            }
         })
     }
 }

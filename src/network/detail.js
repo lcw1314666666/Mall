@@ -40,3 +40,9 @@ export class Params {
         this.rule = itemParams.rule.tables
     }
 }
+
+export function getRecommendData () {
+    return request({
+        url:'recommend'
+    })
+}
