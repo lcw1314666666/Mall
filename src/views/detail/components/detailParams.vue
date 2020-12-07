@@ -17,8 +17,6 @@
                 </td>
             </tr>
         </table>
-
-        <div class="box"></div>
     </div>
 </template>
 
@@ -37,8 +35,9 @@ export default {
 </script>
 
 <style scoped>
-    .box{
-        height:1000px;
+    .detail-params{
+        padding-bottom: 2rem;
+        border-bottom: 0.3rem solid #eee;
     }
     .detail-params table{
         width: 100%;
@@ -52,7 +51,7 @@ export default {
         border-bottom:1px dashed #000;
     }
     .info{
-        padding-left: 0.9rem;
+        padding-left: 2rem;
         text-align: center;
     }
     .info .infoValue{

@@ -7,6 +7,7 @@
             <DetailShopInfo :shops="shop" @imgLoad="imageLoad"></DetailShopInfo>
             <DetailGoodsImage :detailInfo="detailImage" @imageLoad="imageLoad"></DetailGoodsImage>
             <DetailParams :params="itemParams"></DetailParams>
+            <DetailComment :list="commentData"></DetailComment>
         </BetterScroll>
         
     </div>
@@ -19,6 +20,7 @@ import DetailBaseInfo from './components/detailBaseInfo'
 import DetailShopInfo from './components/detailShopInfo'
 import DetailGoodsImage from './components/detailgoodsImage'
 import DetailParams from './components/detailParams'
+import DetailComment from './components/detailComment'
 
 import BetterScroll from '@/components/common/scroll/scroll'
 import { getDetailData, Goods, Shop, Params } from '@/network/detail.js'
@@ -31,7 +33,8 @@ export default {
             goods: {},
             shop: {},
             detailImage: {},
-            itemParams: {}
+            itemParams: {},
+            commentData: []
         }
     },
     components: {
@@ -41,7 +44,8 @@ export default {
         DetailShopInfo,
         BetterScroll,
         DetailGoodsImage,
-        DetailParams
+        DetailParams,
+        DetailComment
     },
     methods: {
         imageLoad () {
@@ -64,7 +68,9 @@ export default {
             this.detailImage = data.detailInfo
             //5.获取参数信息
             this.itemParams = new Params(data.itemParams)
-            console.log(this.itemParams)
+            //6.获取评论信息
+            this.commentData = data.rate.list
+            console.log(this.commentData)
         })
     }
 }
