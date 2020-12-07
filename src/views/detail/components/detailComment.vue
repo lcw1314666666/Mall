@@ -12,7 +12,7 @@
                 </div>
                 <p class="commentInfo">{{ item.content }}</p>
                 <div class="commentStyle">
-                    <span class="time">{{ item.created }}</span>
+                    <span class="time">{{ item.created | showTime }}</span>
                     <span class="style">{{ item.style }}</span>
                 </div>
                 <div class="images" v-if="item.images">
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { formatDate } from '@/common/utils.js'
 export default {
     name: 'DetailComment',
     props: {
@@ -35,6 +36,10 @@ export default {
         }
     },
     filters: {
+        showTime (value) {
+            const date = new Date(value*1000)
+            return formatDate(date, 'yyyy-MM-dd')
+        }
     }
 }
 </script>
