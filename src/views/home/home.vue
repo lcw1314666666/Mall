@@ -52,9 +52,11 @@ import FeatureView from './components/feature.vue'
 
 import { getHomeMultidata, getHomeData } from '@/network/home.js' 
 import {debounce} from '@/common/utils.js'
+import { itemImgListener } from '@/common/mixin.js'
 
 export default {
     name: 'Home',
+    mixins: [itemImgListener],
     data () {
         return {
             banner: [],
@@ -68,7 +70,8 @@ export default {
             showBackTop: false,
             tabControlTop: 0,
             tabControlIsTop: false,
-            saveY: 0
+            saveY: 0,
+            // itemImgListener: null
         }
     },
     components: {
@@ -178,11 +181,6 @@ export default {
         this.getHomeData('sell')
     },
     mounted () {
-        const refresh = debounce(this.$refs.scroll.refresh, 100)
-        this.$bus.$on('imageLoad', () => {
-            refresh()
-        })
-
         
     },
     activated () {
@@ -192,9 +190,11 @@ export default {
         scroll.refresh()
     },
     deactivated () {
-        // 离开home页面触发该函数
+        //1. 离开home页面拿到当前scrollY的值
         let scrollY = this.$refs.scroll.getScrollY()
         this.saveY = scrollY
+        //2.离开该页面的时候取消掉当前页面图片加载完成事件
+        this.$bus.$off('imageLoad', this.itemImgListener)
     }
 }
 </script>

@@ -26,8 +26,11 @@ import DetailRecommend from '@/components/content/goods/goodsList'
 
 import BetterScroll from '@/components/common/scroll/scroll'
 import { getDetailData, Goods, Shop, Params, getRecommendData } from '@/network/detail.js'
+import { debounce } from '@/common/utils.js'
+import { itemImgListener } from '@/common/mixin.js'
 export default {
     name: 'Detail',
+    mixins: [itemImgListener],
     data () {
         return {
             swiperList: null,
@@ -37,7 +40,8 @@ export default {
             detailImage: {},
             itemParams: {},
             commentData: [],
-            recommendData: []
+            recommendData: [],
+            // itemImgListener: null
         }
     },
     components: {
@@ -81,6 +85,13 @@ export default {
                 console.log(this.recommendData)
             }
         })
+    },
+    mounted () {
+        //监听$bus中的imgLoad事件
+        
+    },
+    destroyed () {
+        this.$bus.$off('imageLoad', this.itemImgListener)
     }
 }
 </script>
