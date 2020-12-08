@@ -10,7 +10,7 @@
             <DetailComment :list="commentData" ref="comment"></DetailComment>
             <DetailRecommend :goods="recommendData" ref="recommend"></DetailRecommend>
         </BetterScroll>
-        
+        <DetailBottomBar></DetailBottomBar>
     </div>
 </template>
 
@@ -23,6 +23,7 @@ import DetailGoodsImage from './components/detailgoodsImage'
 import DetailParams from './components/detailParams'
 import DetailComment from './components/detailComment'
 import DetailRecommend from '@/components/content/goods/goodsList'
+import DetailBottomBar from './components/detailBottomBar'
 
 import BetterScroll from '@/components/common/scroll/scroll'
 import { getDetailData, Goods, Shop, Params, getRecommendData } from '@/network/detail.js'
@@ -58,7 +59,8 @@ export default {
         DetailGoodsImage,
         DetailParams,
         DetailComment,
-        DetailRecommend
+        DetailRecommend,
+        DetailBottomBar
     },
     methods: {
         imageLoad () {
@@ -108,7 +110,6 @@ export default {
             let commentOffsetTop = this.$refs.comment.$el.offsetTop
             let recommendOffsetTop = this.$refs.recommend.$el.offsetTop
             this.themeTops.push(paramsOffsetTop, commentOffsetTop, recommendOffsetTop, Number.MAX_VALUE)
-            console.log(this.themeTops)
         }, 100)
     },
     mounted () {
@@ -149,6 +150,6 @@ export default {
         top: 44px;
         left: 0;
         right: 0;
-        bottom: 0;
+        bottom: 49px;
     }
 </style>
