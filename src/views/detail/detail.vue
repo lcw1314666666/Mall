@@ -1,7 +1,7 @@
 <template>
     <div class="detail">
         <DetailNavBar class="detail-nav" ref="navBar" @navItemClick="handleNavItemClick"></DetailNavBar>
-        <BetterScroll class="scroll" ref="scroll" :probeType="3">
+        <BetterScroll class="scroll" ref="scroll" :probeType="3" @scroll="scroll">
             <DetailSwiper :list="swiperList"></DetailSwiper>
             <DetailBaseInfo :goodsInfo="goods"></DetailBaseInfo>
             <DetailShopInfo :shops="shop" @imgLoad="imageLoad"></DetailShopInfo>
@@ -11,6 +11,7 @@
             <DetailRecommend :goods="recommendData" ref="recommend"></DetailRecommend>
         </BetterScroll>
         <DetailBottomBar></DetailBottomBar>
+        <DetailBackTop @click.native="backTopClick" v-show="showBackTop"></DetailBackTop>
     </div>
 </template>
 
@@ -24,6 +25,7 @@ import DetailParams from './components/detailParams'
 import DetailComment from './components/detailComment'
 import DetailRecommend from '@/components/content/goods/goodsList'
 import DetailBottomBar from './components/detailBottomBar'
+import DetailBackTop from '@/components/content/backTop/backTop'
 
 import BetterScroll from '@/components/common/scroll/scroll'
 import { getDetailData, Goods, Shop, Params, getRecommendData } from '@/network/detail.js'
@@ -47,7 +49,8 @@ export default {
             themeTops: [0],
             currentTop: 0,
             getThemeTops: null,
-            currentIndex: null
+            currentIndex: null,
+            showBackTop: false,
         }
     },
     components: {
@@ -60,7 +63,8 @@ export default {
         DetailParams,
         DetailComment,
         DetailRecommend,
-        DetailBottomBar
+        DetailBottomBar,
+        DetailBackTop
     },
     methods: {
         imageLoad () {
@@ -76,7 +80,20 @@ export default {
             // console.log(this.$refs.scroll.scroll.scrollTo)
             console.log(this.themeTops)
             this.$refs.scroll.scroll.scrollTo(0, -this.currentTop, 400)
-        }
+        },
+        backTopClick () {
+            this.$refs.scroll.backTop()
+        },
+        scroll (position) {
+            //判断backTop组件是否显示
+            const y = position.y
+            // console.log(y)
+            if (y < -1000) {
+                this.showBackTop = true
+            } else if (y > -1000) {
+                this.showBackTop = false
+            }
+        },
     },
     created () {
         let iid = this.$route.query.iid
