@@ -51,7 +51,6 @@ import FeatureView from './components/feature.vue'
 
 
 import { getHomeMultidata, getHomeData } from '@/network/home.js' 
-import {debounce} from '@/common/utils.js'
 import { itemImgListener } from '@/common/mixin.js'
 
 export default {

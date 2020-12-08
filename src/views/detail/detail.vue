@@ -1,14 +1,14 @@
 <template>
     <div class="detail">
-        <DetailNavBar class="detail-nav"></DetailNavBar>
-        <BetterScroll class="scroll" ref="scroll">
+        <DetailNavBar class="detail-nav" ref="navBar" @navItemClick="handleNavItemClick"></DetailNavBar>
+        <BetterScroll class="scroll" ref="scroll" :probeType="3">
             <DetailSwiper :list="swiperList"></DetailSwiper>
             <DetailBaseInfo :goodsInfo="goods"></DetailBaseInfo>
             <DetailShopInfo :shops="shop" @imgLoad="imageLoad"></DetailShopInfo>
             <DetailGoodsImage :detailInfo="detailImage" @imageLoad="imageLoad"></DetailGoodsImage>
-            <DetailParams :params="itemParams"></DetailParams>
-            <DetailComment :list="commentData"></DetailComment>
-            <DetailRecommend :goods="recommendData"></DetailRecommend>
+            <DetailParams :params="itemParams" ref="params"></DetailParams>
+            <DetailComment :list="commentData" ref="comment"></DetailComment>
+            <DetailRecommend :goods="recommendData" ref="recommend"></DetailRecommend>
         </BetterScroll>
         
     </div>
@@ -26,8 +26,8 @@ import DetailRecommend from '@/components/content/goods/goodsList'
 
 import BetterScroll from '@/components/common/scroll/scroll'
 import { getDetailData, Goods, Shop, Params, getRecommendData } from '@/network/detail.js'
-import { debounce } from '@/common/utils.js'
 import { itemImgListener } from '@/common/mixin.js'
+import { debounce } from '@/common/utils.js'
 export default {
     name: 'Detail',
     mixins: [itemImgListener],
@@ -42,6 +42,11 @@ export default {
             commentData: [],
             recommendData: [],
             // itemImgListener: null
+            //存储各个模块距离顶部的高度
+            themeTops: [0],
+            currentTop: 0,
+            getThemeTops: null,
+            currentIndex: null
         }
     },
     components: {
@@ -58,6 +63,17 @@ export default {
     methods: {
         imageLoad () {
             this.$refs.scroll.refresh()
+            
+            this.getThemeTops()
+            
+        },
+        handleNavItemClick (index) {
+            //当点击主题按钮时根据所以值跳转高度
+            this.currentTop = this.themeTops[index]
+            this.currentIndex = index
+            // console.log(this.$refs.scroll.scroll.scrollTo)
+            console.log(this.themeTops)
+            this.$refs.scroll.scroll.scrollTo(0, -this.currentTop, 400)
         }
     },
     created () {
@@ -82,13 +98,36 @@ export default {
         getRecommendData ().then((res) => {
             if (res || res.success === true) {
                 this.recommendData = res.data.list
-                console.log(this.recommendData)
+                // console.log(this.recommendData)
             }
         })
+        this.getThemeTops = debounce(() => {
+            this.themeTops = [0]
+            //获取每个主题局顶部的高度，保存到主题高度列表中
+            let paramsOffsetTop = this.$refs.params.$el.offsetTop
+            let commentOffsetTop = this.$refs.comment.$el.offsetTop
+            let recommendOffsetTop = this.$refs.recommend.$el.offsetTop
+            this.themeTops.push(paramsOffsetTop, commentOffsetTop, recommendOffsetTop, Number.MAX_VALUE)
+            console.log(this.themeTops)
+        }, 100)
     },
     mounted () {
         //监听$bus中的imgLoad事件
         
+
+        //监听滚动
+        let scroll = this.$refs.scroll.scroll
+        scroll.on('scroll', (position) => {
+            let scrollY = -position.y
+            // console.log(scrollY)
+            let length = this.themeTops.length
+            for (var i = 0; i < length - 1; i ++) {
+                if (this.currentIndex !== i && (scrollY >= this.themeTops[i] && scrollY < this.themeTops[i + 1])) {
+                    this.currentIndex = i
+                    this.$refs.navBar.currentIndex = this.currentIndex
+                }
+            }
+        })
     },
     destroyed () {
         this.$bus.$off('imageLoad', this.itemImgListener)

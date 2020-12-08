@@ -30,8 +30,11 @@ export default {
     methods: {
         handleItemClick (index) {
             this.currentIndex = index
+            //触发一个事件并把当前事件传出去
+            this.$emit('navItemClick', index)
         },
         handleBackClick () {
+
             this.$router.push('/home')
         }
     }
