@@ -10,7 +10,7 @@
             <DetailComment :list="commentData" ref="comment"></DetailComment>
             <DetailRecommend :goods="recommendData" ref="recommend"></DetailRecommend>
         </BetterScroll>
-        <DetailBottomBar></DetailBottomBar>
+        <DetailBottomBar @cartClick="addToCart"></DetailBottomBar>
         <DetailBackTop @click.native="backTopClick" v-show="showBackTop"></DetailBackTop>
     </div>
 </template>
@@ -83,6 +83,17 @@ export default {
         },
         scroll (position) {
             this.listenerScroll(position)
+        },
+        //加入购物车
+        addToCart () {
+            const product = {}
+            product.image = this.swiperList[0]
+            console.log(this.goods)
+            product.desc = this.goods.desc
+            product.oldPrice = this.goods.oldPrice
+            product.prict = this.goods.lowPrice
+            product.iid = this.iid
+            console.log(product)
         }
     },
     created () {
