@@ -51,11 +51,11 @@ import FeatureView from './components/feature.vue'
 
 
 import { getHomeMultidata, getHomeData } from '@/network/home.js' 
-import { itemImgListener } from '@/common/mixin.js'
+import { itemImgListener, backTop } from '@/common/mixin.js'
 
 export default {
     name: 'Home',
-    mixins: [itemImgListener],
+    mixins: [itemImgListener, backTop],
     data () {
         return {
             banner: [],
@@ -66,7 +66,7 @@ export default {
                 sell: {page: 0, list: []}
             },
             type: 'pop',
-            showBackTop: false,
+            // showBackTop: false,
             tabControlTop: 0,
             tabControlIsTop: false,
             saveY: 0,
@@ -123,20 +123,10 @@ export default {
                 scroll.scrollTo(0, -this.tabControlTop, 500)
             }
         },
-        backTopClick () {
-            this.$refs.scroll.backTop()
-        },
         scroll (position) {
-            //判断backTop组件是否显示
-            const y = position.y
-            // console.log(y)
-            if (y < -1000) {
-                this.showBackTop = true
-            } else if (y > -1000) {
-                this.showBackTop = false
-            }
+            this.listenerScroll(position)
             //判断tabControl是否吸顶
-            
+            let y = position.y
             if (-y > this.tabControlTop) {
                 this.tabControlIsTop = true
             }else if(-y < this.tabControlTop){

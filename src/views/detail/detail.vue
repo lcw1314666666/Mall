@@ -29,11 +29,11 @@ import DetailBackTop from '@/components/content/backTop/backTop'
 
 import BetterScroll from '@/components/common/scroll/scroll'
 import { getDetailData, Goods, Shop, Params, getRecommendData } from '@/network/detail.js'
-import { itemImgListener } from '@/common/mixin.js'
+import { itemImgListener, backTop } from '@/common/mixin.js'
 import { debounce } from '@/common/utils.js'
 export default {
     name: 'Detail',
-    mixins: [itemImgListener],
+    mixins: [itemImgListener, backTop],
     data () {
         return {
             swiperList: null,
@@ -50,7 +50,7 @@ export default {
             currentTop: 0,
             getThemeTops: null,
             currentIndex: null,
-            showBackTop: false,
+            // showBackTop: false,
         }
     },
     components: {
@@ -81,19 +81,9 @@ export default {
             console.log(this.themeTops)
             this.$refs.scroll.scroll.scrollTo(0, -this.currentTop, 400)
         },
-        backTopClick () {
-            this.$refs.scroll.backTop()
-        },
         scroll (position) {
-            //判断backTop组件是否显示
-            const y = position.y
-            // console.log(y)
-            if (y < -1000) {
-                this.showBackTop = true
-            } else if (y > -1000) {
-                this.showBackTop = false
-            }
-        },
+            this.listenerScroll(position)
+        }
     },
     created () {
         let iid = this.$route.query.iid
