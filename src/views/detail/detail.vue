@@ -94,6 +94,8 @@ export default {
             product.prict = this.goods.lowPrice
             product.iid = this.iid
             console.log(product)
+
+            this.$store.dispatch('addCart', product)
         }
     },
     created () {
