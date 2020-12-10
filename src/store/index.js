@@ -9,7 +9,8 @@ import getters from './getters'
 Vue.use(Vuex)
 
 const state = {
-    cartList: []
+    cartList: [],
+    isSelectAll: true
 }
 
 const store = new Vuex.Store({
