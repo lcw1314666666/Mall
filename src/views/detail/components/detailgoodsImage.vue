@@ -2,7 +2,7 @@
     <div class="goods-Info">
         <div class="goods-desc">
             <div class="start"></div>
-            <div class="desc">{{ detailInfo.desc }}</div>
+            <div class="desc">{{ detailInfo.title }}</div>
             <div class="end"></div>
         </div>
         <div class="good-list">

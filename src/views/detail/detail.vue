@@ -88,11 +88,11 @@ export default {
         addToCart () {
             const product = {}
             product.image = this.swiperList[0]
-            console.log(this.goods)
             product.desc = this.goods.desc
             product.oldPrice = this.goods.oldPrice
-            product.prict = this.goods.lowPrice
+            product.price = this.goods.lowPrice
             product.iid = this.iid
+            product.title = this.goods.title
             console.log(product)
 
             this.$store.dispatch('addCart', product)
