@@ -1,7 +1,7 @@
 <template>
     <div class="cartListItem">
         <div class="item-selector">
-            <CheckedButton class="checkButton"></CheckedButton>
+            <CheckedButton class="checkButton" @click.native="handleCheckedButtonClick(product.iid)" :isChecked="product.isChecked"></CheckedButton>
         </div>
         <div class="item-img">
             <img :src="product.image" alt="">
@@ -31,6 +31,11 @@ export default {
     },
     components: {
         CheckedButton
+    },
+    methods: {
+        handleCheckedButtonClick (iid) {
+            this.$store.dispatch('changeIsChecked', iid)
+        }
     }
 }
 </script>
@@ -51,9 +56,6 @@ export default {
         justify-content: center;
         align-items: center;
         width: 1rem;
-    }
-    .cartListItem .item-selector .checkButton{
-        /* flex: 1; */
     }
     .cartListItem .item-img{
         width: 4.5rem;

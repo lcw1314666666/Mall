@@ -7,7 +7,15 @@ export default {
             context.commit(ADD_COUNT, lodProduct)
         } else {
             payload.count = 1
+            payload.isChecked = true
             context.commit(ADD_TO_CART, payload)
+        }
+    },
+    changeIsChecked (context ,iid) {
+        for (let item of context.state.cartList) {
+            if (item.iid === iid) {
+                item.isChecked = !item.isChecked
+            }
         }
     }
 }
