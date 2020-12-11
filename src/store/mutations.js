@@ -17,5 +17,8 @@ export default {
     },
     allGoodsSelect (state, payload) {
         payload.isChecked = true
+    },
+    isSelectClick (state, payload) {
+        payload.isChecked = !payload.isChecked
     }
 }

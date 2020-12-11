@@ -12,20 +12,19 @@ export default {
         }
     },
     changeIsChecked (context , iid) {
-        let checkedNum = context.state.cartList.forEach(item => {
-            
+        for (let item of context.state.cartList) {
+            if (item.iid === iid) {
+                context.commit('isSelectClick', item)
+            }
+        }
+        let isSelectAll = context.state.cartList.every((item) => {
+            return item.isChecked === true
         })
-        console.log(checkedNum)
-        if (checkedNum === context.state.cartList.length) {
-            console.log(2555)
+        console.log(isSelectAll)
+        if (isSelectAll) {
             context.commit('selectAll')
         } else {
             context.commit('noSelectAll')
-        }
-        for (let item of context.state.cartList) {
-            if (item.iid === iid) {
-                item.isChecked = !item.isChecked
-            }
         }
     },
     selectAllGoods (context) {
