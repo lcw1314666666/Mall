@@ -8,7 +8,7 @@
             总计:<span class="totalPrice">{{ calcTotalPrice }}</span>
         </div>
         <div class="calc-button">
-            去计算(<span class="totalPrice">{{ goodsNum }}</span>)
+            去计算(<span class="goCalc" @click="handleGoCalc">{{ goodsNum }}</span>)
         </div>
     </div>
 </template>
@@ -28,6 +28,11 @@ export default {
     methods: {
         selectAllClick () {
             this.$store.dispatch('selectAllGoods')
+        },
+        handleGoCalc () {
+            if (this.goodsNum === 0) {
+                this.$toast.show('请选择商品', 500)
+            }
         }
     }
 }

@@ -12,7 +12,7 @@
         </BetterScroll>
         <DetailBottomBar @cartClick="addToCart"></DetailBottomBar>
         <DetailBackTop @click.native="backTopClick" v-show="showBackTop"></DetailBackTop>
-        <Toast :isShow="toastIsShow" :message='message'></Toast>
+        <!-- <Toast :isShow="toastIsShow" :message='message'></Toast> -->
     </div>
 </template>
 
@@ -27,7 +27,7 @@ import DetailComment from './components/detailComment'
 import DetailRecommend from '@/components/content/goods/goodsList'
 import DetailBottomBar from './components/detailBottomBar'
 import DetailBackTop from '@/components/content/backTop/backTop'
-import Toast from '@/components/common/toast/toast'
+// import Toast from '@/components/common/toast/toast'
 
 import BetterScroll from '@/components/common/scroll/scroll'
 import { getDetailData, Goods, Shop, Params, getRecommendData } from '@/network/detail.js'
@@ -53,8 +53,8 @@ export default {
             getThemeTops: null,
             currentIndex: null,
             // showBackTop: false,
-            toastIsShow: false,
-            message: ''
+            // toastIsShow: false,
+            // message: ''
         }
     },
     components: {
@@ -69,7 +69,7 @@ export default {
         DetailRecommend,
         DetailBottomBar,
         DetailBackTop,
-        Toast
+        // Toast
     },
     methods: {
         imageLoad () {
@@ -101,11 +101,15 @@ export default {
             console.log(product)
 
             this.$store.dispatch('addCart', product).then((res) => {
-                this.toastIsShow = true
-                this.message = res
-                setTimeout(() => {
-                    this.toastIsShow = false
-                }, 300)
+                // this.toastIsShow = true
+                // this.message = res
+                // setTimeout(() => {
+                //     this.toastIsShow = false
+                // }, 300)
+                // this.$toast.show(res, 500)
+                this.$toast.show(res, 500)
+                
+
             })
         }
     },

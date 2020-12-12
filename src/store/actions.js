@@ -25,7 +25,6 @@ export default {
         let isSelectAll = context.state.cartList.every((item) => {
             return item.isChecked === true
         })
-        console.log(isSelectAll)
         if (isSelectAll) {
             context.commit('selectAll')
         } else {

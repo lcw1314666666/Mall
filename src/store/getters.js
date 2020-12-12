@@ -23,6 +23,11 @@ export default {
         }).length
     },
     isSelectAll (state) {
-        return state.isSelectAll
+        if (state.cartList.length !== 0) {
+            return state.isSelectAll
+        } else {
+            return false
+        }
+        
     }
 }
