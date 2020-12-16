@@ -3,8 +3,8 @@
         <img v-lazy="goods.image || goods.show.img" alt="" @load="imageLoad">
         <div class="info">
             <p class="title">{{ goods.title }}</p>
-            <span class="price">{{ goods.orgPrice || '￥'+ goods.price }}</span>
-            <span class="collect">{{ goods.cfav }}</span>
+            <span class="price" v-if="goods.oriPrice">{{ goods.orgPrice || '￥'+ goods.price }}</span>
+            <span class="collect" v-if="goods.cfav">{{ goods.cfav }}</span>
         </div>
     </div>
 </template>
@@ -26,6 +26,9 @@ export default {
         },
         itemClick (goods) {
             // console.log(goods, this.$router)
+            if (this.$router.history.current.path == '/category') {
+                return
+            }
             
             this.$router.push({
                 path: '/detail',

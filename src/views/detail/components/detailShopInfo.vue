@@ -168,7 +168,6 @@ export default {
         border-radius: 0.2rem;
         background: #eee;
         margin: 2rem auto;
-        
     }
 
 

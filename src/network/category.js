@@ -14,3 +14,13 @@ export function getCategoryGoodsData (maitKey) {
         }
     })
 }
+
+export function getCategoryDetailData (miniWallkey, type) {
+    return request({
+        url: '/subcategory/detail',
+        params: {
+            miniWallkey,
+            type
+        }
+    })
+}

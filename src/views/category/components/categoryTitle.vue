@@ -1,5 +1,5 @@
 <template>
-    <CategoryTitleScroll class="categoryTitle scroll">
+    <CategoryTitleScroll class="categoryTitle scroll" ref='categoryListScroll'>
         <li class="titleListItem" 
             v-for="(item, index) in list" 
             :key="index"
@@ -34,6 +34,9 @@ export default {
             this.currentIndex = index
             this.$emit('handleTitleClick', index)
         }
+    },
+    updated () {
+        this.$refs.categoryListScroll.scroll.refresh()
     }
 }
 </script>

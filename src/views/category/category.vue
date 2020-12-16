@@ -6,7 +6,15 @@
                             :list="titleDataList"
                             @handleTitleClick="titleListClick"
             ></CategoryTitle>
-            <div class="container"></div>
+            <Scroll class="CategoryContainerScroll container" ref="categoryContainerScroll">
+                <GridView :cols='3'>
+                    <GoodsListItem v-for="(item, index) in goodsList"
+                                   :key="index"
+                                   :goods="item"
+                                   @click.native="handleItemClick(index)"
+                    ></GoodsListItem>
+                </GridView>
+            </Scroll>
         </div>
     </div>
 </template>
@@ -14,8 +22,13 @@
 <script>
 import CategoryNavBar from './components/categoryNav'
 import CategoryTitle from './components/categoryTitle'
+import GridView from '@/components/common/gridView/GridView'
 
-import { getCategoryData, getCategoryGoodsData } from '@/network/category'
+import GoodsListItem from '@/components/content/goods/goodsListItem'
+import Scroll from '@/components/common/scroll/scroll'
+
+import { debounce } from '@/common/utils.js'
+import { getCategoryData, getCategoryGoodsData, getCategoryDetailData } from '@/network/category'
 
 export default {
     name: 'Category',
@@ -23,12 +36,16 @@ export default {
         return {
             titleDataList: [],
             titleIndex: 0,
-            goodsList: []
+            goodsList: [],
+            types: ['pop', 'new', 'sell']
         }
     },
     components: {
         CategoryNavBar,
-        CategoryTitle
+        CategoryTitle,
+        GridView,
+        Scroll,
+        GoodsListItem
     },
     methods: {
         //如果标题被点击拿到该分类数据
@@ -40,7 +57,23 @@ export default {
                 if (res.success) {
                     this.goodsList = data.list
                 }
-                console.log(this.goodsList)
+            })
+        },
+        //
+        handleItemClick (index) {
+            const miniWallkey = this.titleDataList[this.titleIndex].miniWallkey
+            const Index = index % this.types.length
+            const type = this.types[Index]
+
+            getCategoryDetailData(miniWallkey, type).then(res => {
+                const data = res
+                console.log(data)
+                // this.$router.push({
+                //     path: '/detail',
+                //     query: {
+                //         iid: data.iid
+                //     }
+                // })
             })
         }
     },
@@ -53,6 +86,25 @@ export default {
             // console.log(this.titleDataList)
             }
         })
+    },
+    mounted () {
+        // console.log(this.$refs.categoryContainerScroll.scroll)
+        //刷新滚动条
+        this.$refs.categoryContainerScroll.scroll.refresh()
+
+        // console.log(this.$router.history.current.path)
+        //等待图片加载再刷新滚动条
+        const imgLoad = debounce(() => {
+            this.$refs.categoryContainerScroll.scroll.refresh()
+        }, 100)
+
+        if (this.$router.history.current.path == '/category') {
+            this.$bus.$on('imageLoad', imgLoad)
+        }
+    },
+    updated () {
+        this.$refs.categoryContainerScroll.scroll.refresh()
+        this.titleListClick(this.titleIndex)
     }
 }
 </script>
@@ -70,15 +122,15 @@ export default {
         top: 0;
         left: 0; */
         height: calc(100% - 44px - 69px);
-        background: rgba(12, 56, 65, 0.4);
     }
 
     .titleList{
         flex: 1;
-        background:rgba(54, 150, 66, 0.4);
     }
     .container{
         flex: 3;
-        background:rgba(100, 100, 66, 0.4)
+    }
+    .box{
+        height: 1000px;
     }
 </style>
